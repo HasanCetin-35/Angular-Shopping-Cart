@@ -1,0 +1,36 @@
+
+<app-category></app-category>
+<!--*ngIf eğer ürün var ise bana başlığı göster anlamına gelmektedir.-->
+<div>
+  <input
+    class="form-control"
+    id="productName"
+    placeholder="Arama metnini giriniz"
+    [(ngModel)]="filterText"
+  />
+</div>
+<!--eğer ürün yok ise ng-template çalışıcaktır.-->
+<ng-template #noProduct
+  ><div class="alert alert-warning" role="alert">
+    Bu kategoride ürün yoktur.
+  </div></ng-template
+>
+<div class="row">
+  <div
+    *ngFor="let product of products | productFilter: filterText"
+    class="productbox"
+    style="width: 18rem"
+  >
+    <!--*ngFor yapısı bizim kaç tane ürünüzüm var ise o kadar divi çalıştır demek anlamına geliyor.-->
+    <img [src]="product.imageUrl" class="card-img-top" alt="..." />
+    <div class="card-body">
+      <h5 class="card-title">
+        {{ product.name | uppercase }} {{ product.price | currency: "USD" }}
+      </h5>
+      <p class="card-text">
+        {{ product.description }}
+      </p>
+      <a (click)="addToCard(product)" class="btn btn-primary">Sepete ekle </a>
+    </div>
+  </div>
+</div>
